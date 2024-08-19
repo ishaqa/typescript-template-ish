@@ -2,6 +2,8 @@ import { NS } from "@ns";
 
 /** @param {NS} ns */
 export async function main(ns: NS): Promise<void> {
+    
+    const [numberOfThreads = 1,  ] = ns.args;
     // Defines the "target server", which is the server
     // that we're going to hack. In this case, it's "n00dles"
     const target = "n00dles";
@@ -10,12 +12,11 @@ export async function main(ns: NS): Promise<void> {
         weaken: 0.05
     }
 
-    const [numberOfThreads = 1 ] = ns.args;
 
     ns.print("threadstring: ", ns.args[0])
     // Defines how much money a server should have before we hack it
     // In this case, it is set to the maximum amount of money.
-    const moneyThresh = ns.getServerMaxMoney(target);
+    const moneyThresh = ns.getServerMaxMoney(target) * 0.9;
 
     // Defines the minimum security level the target server can
     // have. If the target's security level is higher than this,
@@ -24,13 +25,12 @@ export async function main(ns: NS): Promise<void> {
     ns.print(securityThresh)
     // If we have the BruteSSH.exe program, use it to open the SSH Port
     // on the target server
-    if (ns.fileExists("BruteSSH.exe", "home")) {
-        ns.brutessh(target);
-    }
+    // if (ns.fileExists("BruteSSH.exe", "home")) {
+    //     ns.brutessh(target);
+    // }
 
     // Get root access to target server
     ns.nuke(target);
-    ns.growthAnalyze
 
     // Infinite loop that continously hacks/grows/weakens the target server
     while(true) {

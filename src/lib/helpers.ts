@@ -7,7 +7,7 @@ export function readJsonFile<T>(ns: NS, fileName: string, customPath: string = "
 }
 
 export function writeJsonFile<T>(ns: NS, data: T, fileName: string, customPath: string = "temp/"): void {
-    ns.write(customPath + fileName, JSON.stringify(data));
+    ns.write(customPath + fileName, JSON.stringify(data), "w");
 }
 
 const pathServerDetails = "static/serverDetails.json";
@@ -23,6 +23,7 @@ const staticServerDetails = {
 export class ServerDetails {
     public ns: NS;
     public static filePath = "static/serverDetails.json";
+    public details: ServerDict = {};
   
     constructor(props: { ns: NS }) {
         this.ns = props.ns;
@@ -35,7 +36,10 @@ export class ServerDetails {
 
     public load (): ServerDict {
         //@TODO add in check here to see if  file exists else trigger a scan of all the servers
-        return JSON.parse(this.ns.read(ServerDetails.filePath));
+        const serverDetails = JSON.parse(this.ns.read(ServerDetails.filePath));
+        this.details = serverDetails
+
+        return serverDetails;
     }
 
 }

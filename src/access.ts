@@ -3,6 +3,9 @@ import {readJsonFile, writeJsonFile} from 'lib/helpers';
 
 export async function main(ns: NS): Promise<void> {
   const scanResults = ns.scan();
+  scanResults.forEach((result) => {
+      ns.exec("hack-all.js", "home", 1, result);
+  })
   const serverDetails: {[key:string]: Server} = {}
   scanResults.forEach((result) => {
       const sd = ns.getServer(result);
@@ -13,3 +16,4 @@ export async function main(ns: NS): Promise<void> {
 //   ns.write("temp/scanResults.json", JSON.stringify(scanResults));
 
 }
+ 
